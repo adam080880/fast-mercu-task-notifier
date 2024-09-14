@@ -1,2 +1,5 @@
 .env
 node_modules
+
+src/databases/*.json
+!src/databases/*.json.example

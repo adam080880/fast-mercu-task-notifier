@@ -4,7 +4,7 @@ class Controller {
   constructor() {
   }
 
-  protected response<T>(status: boolean, message: string, data?: T): Response<T> {
+  protected response = <T>(status: boolean, message: string, data?: T): Response<T> => {
     return {
       status,
       message,
@@ -12,7 +12,7 @@ class Controller {
     };
   }
 
-  public needAuth() {
+  public needAuth = () => {
     return (req: Request, res: ExpressResponse, next: NextFunction) => {
       if (!req.headers.authorization) {
         return res.status(403).json(this.response(false, 'Need Authorization'));
@@ -22,6 +22,20 @@ class Controller {
     }
   }
 };
+
+export class ResponseError extends Error {
+  public code: number;
+
+  constructor(message: string, code: number) {
+    super(message);
+    this.name = 'ResponseError';
+    this.code = code;
+
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, ResponseError);
+    }
+  }
+}
 
 export type Response<T> = {
   status: boolean,
