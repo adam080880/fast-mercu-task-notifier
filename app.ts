@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.PORT;
 
 app.use(bodyParser.json());
-app.use(mainRoute);
+app.use(process.env.PREFIX_API || '/', mainRoute);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at port ${port}`);
